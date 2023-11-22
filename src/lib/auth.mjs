@@ -1,5 +1,5 @@
 import { userStore } from "./stores.mjs";
-// import {supabase} from './supabaseClient.mjs';
+import {supabase} from './supabaseClient.mjs';
 
 export async function signUp(user) {
   let { data, error } = await supabase.auth.signUp({
@@ -14,7 +14,6 @@ export async function login(user) {
     email: user.email,
     password: user.password
   });
-  // track the user in the system
   if (data) userStore.set({ isLoggedIn: true, user: data.user });
 
   return { data, error };

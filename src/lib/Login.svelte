@@ -1,6 +1,6 @@
 <script>
     import { signUp, login } from "./auth.mjs";
-    import { userStore } from "./stores.mjs";
+    // import { userStore } from "./stores.mjs";
     let email = "";
     let password = "";
     let loading = false;

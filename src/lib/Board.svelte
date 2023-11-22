@@ -7,7 +7,6 @@
       const url = "https://api.unsplash.com/";
       const endpoint = "photos";
       const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
-      const count = 20;  
       try {
         const response = await fetch(`${url}${endpoint}?count=20`, {
           method: 'GET',

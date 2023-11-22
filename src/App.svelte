@@ -2,7 +2,7 @@
   import Board from "./lib/Board.svelte";
   import Login from "./lib/Login.svelte";
   import Navbar from "./lib/Navbar.svelte";
-  import {route} from './lib/stores.mjs';
+  import { route } from "./lib/stores.mjs"; 
 
 
   window.addEventListener('popstate', () => {
