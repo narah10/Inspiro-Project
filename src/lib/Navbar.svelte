@@ -1,16 +1,22 @@
 <script>
   import { logout } from "./auth.mjs";
   import { userStore } from "./stores.mjs";
-
-
 </script>
 
 <nav>
-    <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#login">Login</a></li>
-        <li><a href="#home" on:click={logout}>Logout</a></li>
-    </ul>
+  <div>
+    <img src="src/assets/logo.svg" />
+  </div>
+  <div>
+    <input type="text" id="search" name="search" placeholder="Search">
+    <button>Search</button>
+  </div>
+  <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#favorites">Favorites</a></li>
+      <li><a href="#login">Login</a></li>
+      <li><a href="#home" on:click={logout}>Logout</a></li>
+  </ul>
 </nav>
 
 <style>
