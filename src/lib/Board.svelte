@@ -1,8 +1,8 @@
 <script>
-    let imageUrls = [];
-    let imageAlts = [];
-    let imageArtists = [];
-  
+    export let imageUrls = [];
+    export let imageAlts = [];
+    export let imageArtists = [];
+
     async function boardData() {
       const url = "https://api.unsplash.com/";
       const endpoint = "photos";
@@ -32,6 +32,21 @@
     }
   
     boardData();
+
+    function showImageDetails(index) {
+    setTimeout(() => {
+      const boardDetails = document.getElementById("boardDetails");
+      if (boardDetails) {
+        boardDetails.innerHTML = `
+          <h2>Image Details</h2>
+          <img src="${imageUrls[index]}" alt="${imageAlts[index] || 'Unsplash'}" />
+          <h3>Artist: ${imageArtists[index]}</h3>
+        `;
+      } else {
+        console.error('Element with id "boardDetails" not found');
+      }
+    });
+  }
   </script>
   
   <div>
@@ -40,18 +55,14 @@
     <div class="board-container">
         {#each imageUrls as imageUrl, i (imageUrl)}
         <div class="board-item">
-            <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-            <h3>Artist: {imageArtists[i]}</h3>
+           <a href="#boardDetails" on:click={() => showImageDetails(i)}><img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
+            <h3>Artist: {imageArtists[i]}</h3></a> 
         </div>
     {/each}
     </div>
   </div>
 
   <style>
-    /* .board-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    } */
     .board-container {
     column-count: 3;
     column-gap: 15px;
