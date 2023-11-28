@@ -1,15 +1,14 @@
 <script>
-    import { saveAs } from 'file-saver';
     export let imageUrls = [];
     export let imageAlts = [];
     export let imageArtists = [];
 
     async function boardData() {
       const url = "https://api.unsplash.com/";
-      const endpoint = "photos";
+      const endpoint = "photos/random";
       const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
       try {
-        const response = await fetch(`${url}${endpoint}?count=20`, {
+        const response = await fetch(`${url}${endpoint}?count=30`, {
           method: 'GET',
           headers: {
             'Content-type': 'application/json',
@@ -46,39 +45,18 @@
         console.error('Element with id "boardDetails" not found');
       }
     });
-  } 
-  
-   // Download Button
-    const downloadImage = async (imageUrl) => {
-      try {
-        const response = await fetch(imageUrl);
-
-        // Assuming the response is an image, you can use blob() to create a Blob object.
-        const imageBlob = await response.blob();
-
-        // Trigger the download using FileSaver.js
-        saveAs(imageBlob, "image.jpg");
-      } catch (error) {
-        console.error('Error downloading image:', error);
-      }
-    };
-   
+  }
   </script>
   
-<div>
-  <h2>Welcome to Inspiro</h2>
-  <p>Browse different art pieces of many talented artists</p>
-  <div class="board-container">
-    {#each imageUrls as imageUrl, i (imageUrl)}
-      <div class="board-item">
-        <!-- Download Function -->
-        <button class="download-button" on:click={() => downloadImage(imageUrl)}>
-          <img src="./src/images/Download-Icon.jpg" alt="download">
-        </button>
-        <!-- Fetching Images -->
-        <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-        <h3>Artist: {imageArtists[i]}</h3>
-      </div>
+  <div>
+    <h2>Welcome to Inspiro</h2>
+    <p>Browse different art pieces of many talented artist</p>
+    <div class="board-container">
+        {#each imageUrls as imageUrl, i (imageUrl)}
+        <div class="board-item">
+           <a href="#boardDetails" on:click={() => showImageDetails(i)}><img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
+            <h3>Artist: {imageArtists[i]}</h3></a> 
+        </div>
     {/each}
   </div>
 </div>
@@ -125,28 +103,6 @@
 
     .download-button:hover img {
       transform: scale(1.2);
-    }
-
-    /* Favorite Function */
-    .btn{
-      background: none;
-      border: 0; 
-    }
-
-    .btn:hover img {
-      transform: scale(1.2);
-    }
-
-    .btn img {
-      width: 4.2rem;
-    }
-
-    .btn {
-      position: absolute;
-      top: 0;
-      right: 0.5;
-      z-index: 1;
-      border: 0;
     }
 
   </style>
