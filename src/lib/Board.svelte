@@ -28,9 +28,18 @@
         console.log(data);
       } catch (error) {
         console.error('Error fetching data:', error);
+
       }
+
+      const data = await response.json();
+      imageUrls = data.map(item => item.urls.small);
+      imageAlts = data.map(item => item.alt_description);
+      imageArtists = data.map(item => item.user.name);
+
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
-  
     boardData();
 
     function showImageDetails(index) {
@@ -59,8 +68,9 @@
             <h3>Artist: {imageArtists[i]}</h3></a> 
         </div>
     {/each}
-    </div>
   </div>
+</div>
+
 
   <style>
     .board-container {
@@ -75,5 +85,35 @@
     display:block;
     width: 100%;
     }
+
+    /* Download Button Set Up */
+    .board-item {
+      position: relative; /* Make the .board-item container a positioning context */
+    }
+
+    .board-item .download-button{
+      background-color: transparent;
+    }
+
+    .download-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      border: 0;
+    }
+
+    .download-button:hover {
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .download-button img {
+      width: 4.5rem;
+    }
+
+    .download-button:hover img {
+      transform: scale(1.2);
+    }
+
   </style>
   
