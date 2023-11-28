@@ -1,4 +1,5 @@
 <script>
+    import { saveAs } from 'file-saver';
     export let imageUrls = [];
     export let imageAlts = [];
     export let imageArtists = [];
@@ -45,41 +46,25 @@
         console.error('Element with id "boardDetails" not found');
       }
     });
-  }
+  } 
+  
+   // Download Button
+    const downloadImage = async (imageUrl) => {
+      try {
+        const response = await fetch(imageUrl);
+
+        // Assuming the response is an image, you can use blob() to create a Blob object.
+        const imageBlob = await response.blob();
+
+        // Trigger the download using FileSaver.js
+        saveAs(imageBlob, "image.jpg");
+      } catch (error) {
+        console.error('Error downloading image:', error);
+      }
+    };
+   
   </script>
   
-  <div>
-    <h2>Welcome to Inspiro</h2>
-    <p>Browse different art pieces of many talented artist</p>
-    <div class="board-container">
-        {#each imageUrls as imageUrl, i (imageUrl)}
-        <div class="board-item">
-           <a href="#boardDetails" on:click={() => showImageDetails(i)}><img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-            <h3>Artist: {imageArtists[i]}</h3></a> 
-        </div>
-  // Download Button
-  const downloadImage = async (imageUrl) => {
-    try {
-      const response = await fetch(imageUrl);
-
-      // Assuming the response is an image, you can use blob() to create a Blob object.
-      const imageBlob = await response.blob();
-
-      // Trigger the download using FileSaver.js
-      saveAs(imageBlob, "image.jpg");
-    } catch (error) {
-      console.error('Error downloading image:', error);
-    }
-  };
-
-  // Favorite Function Code
-  var btnvar1 = document.getElementById("btn1"); 
-
-  // function Toggle1(){
-  //   if (btnvar1.style.color )
-  // }
-</script>
-
 <div>
   <h2>Welcome to Inspiro</h2>
   <p>Browse different art pieces of many talented artists</p>
@@ -90,9 +75,6 @@
         <button class="download-button" on:click={() => downloadImage(imageUrl)}>
           <img src="./src/images/Download-Icon.jpg" alt="download">
         </button>
-        <!-- Favorites Funtion -->
-        <button on:click={() => Toggle1()} class="btn" id="btn1"><img src="./src/images/unmarked-favorites.png" alt="btn1"></button>
-        <button on:click={() => Toggle2()} class="btn" id="btn2"><img src="./src/images/marked-favorites.png" alt="btn2"></button>
         <!-- Fetching Images -->
         <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
         <h3>Artist: {imageArtists[i]}</h3>
