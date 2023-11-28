@@ -1,24 +1,33 @@
 <script>
-  import { saveAs } from 'file-saver';
-  let imageUrls = [];
-  let imageAlts = [];
-  let imageArtists = [];
+    export let imageUrls = [];
+    export let imageAlts = [];
+    export let imageArtists = [];
 
-  async function boardData() {
-    const url = "https://api.unsplash.com/";
-    const endpoint = "photos/random";
-    const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
-    try {
-      const response = await fetch(`${url}${endpoint}?count=30`, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': `Client-ID ${access_key}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+    async function boardData() {
+      const url = "https://api.unsplash.com/";
+      const endpoint = "photos";
+      const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
+      try {
+        const response = await fetch(`${url}${endpoint}?count=20`, {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Client-ID ${access_key}`,
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        imageUrls = data.map(item => item.urls.small);
+        imageAlts = data.map(item => item.alt_description);
+        imageArtists = data.map(item => item.user.name);
+        
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
 
       const data = await response.json();
@@ -30,49 +39,39 @@
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+    boardData();
+
+    function showImageDetails(index) {
+    setTimeout(() => {
+      const boardDetails = document.getElementById("boardDetails");
+      if (boardDetails) {
+        boardDetails.innerHTML = `
+          <h2>Image Details</h2>
+          <img src="${imageUrls[index]}" alt="${imageAlts[index] || 'Unsplash'}" />
+          <h3>Artist: ${imageArtists[index]}</h3>
+        `;
+      } else {
+        console.error('Element with id "boardDetails" not found');
+      }
+    });
   }
-
-  boardData();
-
-  // Download Button
-  const downloadImage = async (imageUrl) => {
-    try {
-      const response = await fetch(imageUrl);
-
-      // Assuming the response is an image, you can use blob() to create a Blob object.
-      const imageBlob = await response.blob();
-
-      // Trigger the download using FileSaver.js
-      saveAs(imageBlob, "image.jpg");
-    } catch (error) {
-      console.error('Error downloading image:', error);
-    }
-  };
-
-</script>
-
-<div>
-  <h2>Welcome to Inspiro</h2>
-  <p>Browse different art pieces of many talented artists</p>
-  <div class="board-container">
-    {#each imageUrls as imageUrl, i (imageUrl)}
-      <div class="board-item">
-        <button class="download-button" on:click={() => downloadImage(imageUrl)}>
-          <img src="./src/images/Download-Icon.jpg" alt="download">
-        </button>
-        <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-        <h3>Artist: {imageArtists[i]}</h3>
-      </div>
+  </script>
+  
+  <div>
+    <h2>Welcome to Inspiro</h2>
+    <p>Browse different art pieces of many talented artist</p>
+    <div class="board-container">
+        {#each imageUrls as imageUrl, i (imageUrl)}
+        <div class="board-item">
+           <a href="#boardDetails" on:click={() => showImageDetails(i)}><img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
+            <h3>Artist: {imageArtists[i]}</h3></a> 
+        </div>
     {/each}
   </div>
 </div>
 
 
   <style>
-    /* .board-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    } */
     .board-container {
     column-count: 3;
     column-gap: 15px;
