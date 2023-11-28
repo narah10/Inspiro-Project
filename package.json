@@ -10,10 +10,12 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
+    "@types/file-saver": "^2.0.7",
     "svelte": "^4.0.5",
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.38.5"
+    "@supabase/supabase-js": "^2.38.5",
+    "file-saver": "^2.0.5"
   }
 }
