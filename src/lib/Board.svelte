@@ -28,7 +28,6 @@
         console.log(data);
       } catch (error) {
         console.error('Error fetching data:', error);
-
       }
 
       const data = await response.json();
