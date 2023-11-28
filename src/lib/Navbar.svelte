@@ -1,16 +1,14 @@
 <script>
   import { logout } from "./auth.mjs";
   import { userStore } from "./stores.mjs";
+  import Search from "./Search.svelte";
 </script>
 
 <nav>
   <div>
-    <img src="src/assets/logo.svg" />
+    <img src="src/assets/logo.svg" alt="logo"/>
   </div>
-  <div>
-    <input type="text" id="search" name="search" placeholder="Search">
-    <button>Search</button>
-  </div>
+  <Search />
   <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#favorites">Favorites</a></li>

@@ -1,7 +1,9 @@
 <script>
+    // import { showImageDetails } from './util';
     export let imageUrls = [];
     export let imageAlts = [];
     export let imageArtists = [];
+    export { showImageDetails };
 
     async function boardData() {
       const url = "https://api.unsplash.com/";
@@ -81,7 +83,7 @@
       position: relative; /* Make the .board-item container a positioning context */
     }
 
-    .board-item .download-button{
+    /* .board-item .download-button{
       background-color: transparent;
     }
 
@@ -103,7 +105,7 @@
 
     .download-button:hover img {
       transform: scale(1.2);
-    }
+    } */
 
   </style>
   
