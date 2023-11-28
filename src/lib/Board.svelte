@@ -29,15 +29,6 @@
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-
-      const data = await response.json();
-      imageUrls = data.map(item => item.urls.small);
-      imageAlts = data.map(item => item.alt_description);
-      imageArtists = data.map(item => item.user.name);
-
-      console.log(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
     }
     boardData();
 
