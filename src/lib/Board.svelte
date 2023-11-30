@@ -7,8 +7,10 @@
     export async function boardData() {
       const url = "https://api.unsplash.com/";
       const endpoint = "photos/random";
+      const endpoint = "photos/random";
       const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
       try {
+        const response = await fetch(`${url}${endpoint}?count=30`, {
         const response = await fetch(`${url}${endpoint}?count=30`, {
           method: 'GET',
           headers: {
