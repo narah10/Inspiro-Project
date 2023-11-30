@@ -1,7 +1,9 @@
 <script>
+    // import { showImageDetails } from './util';
     export let imageUrls = [];
     export let imageAlts = [];
     export let imageArtists = [];
+    export { showImageDetails };
     import  DownloadDetails  from "./downloadDetails.svelte";
 
     export async function boardData() {
@@ -65,7 +67,6 @@
     {/each}
   </div>
 </div>
-
 
 <style>
   .board-item {
