@@ -4,13 +4,15 @@
     export let imageAlts = [];
     export let imageArtists = [];
     export { showImageDetails };
+    import  DownloadDetails  from "./downloadDetails.svelte";
 
-    async function boardData() {
+    export async function boardData() {
       const url = "https://api.unsplash.com/";
       const endpoint = "photos/random";
       const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
       try {
         const response = await fetch(`${url}${endpoint}?count=30`, {
+
           method: 'GET',
           headers: {
             'Content-type': 'application/json',
@@ -47,65 +49,41 @@
         console.error('Element with id "boardDetails" not found');
       }
     });
-  }
-  </script>
+  } 
+
+</script>
   
-  <div>
-    <h2>Welcome to Inspiro</h2>
-    <p>Browse different art pieces of many talented artist</p>
-    <div class="board-container">
-        {#each imageUrls as imageUrl, i (imageUrl)}
-        <div class="board-item">
-           <a href="#boardDetails" on:click={() => showImageDetails(i)}><img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-            <h3>Artist: {imageArtists[i]}</h3></a> 
-        </div>
+<div>
+  <h2>Welcome to Inspiro</h2>
+  <p>Browse different art pieces of many talented artists</p>
+  <div class="board-container">
+    {#each imageUrls as imageUrl, i (imageUrl)}
+      <div class="board-item">
+        <!-- Fetching Images -->
+        <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
+        <h3>Artist: {imageArtists[i]}</h3>
+        <DownloadDetails imageUrl = {imageUrl}/>
+      </div>
     {/each}
   </div>
 </div>
 
-
-  <style>
-    .board-container {
-    column-count: 3;
-    column-gap: 15px;
-    }
-    .board-item {
-    display: inline-block;
-    width: 100%;
-    }
-    .board-item img {
-    display:block;
-    width: 100%;
-    }
-
-    /* Download Button Set Up */
-    .board-item {
-      position: relative; /* Make the .board-item container a positioning context */
-    }
-
-    /* .board-item .download-button{
-      background-color: transparent;
-    }
-
-    .download-button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 1;
-      border: 0;
-    }
-
-    .download-button:hover {
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .download-button img {
-      width: 4.5rem;
-    }
-
-    .download-button:hover img {
-      transform: scale(1.2);
-    } */
-
-  </style>
+<style>
+  .board-item {
+    position: relative; 
+  }
+  
+  .board-container {
+  column-count: 3;
+  column-gap: 15px;
+  }
+  .board-item {
+  display: inline-block;
+  width: 100%;
+  }
+  .board-item img {
+  display:block;
+  width: 100%;
+  }
+</style>
   
