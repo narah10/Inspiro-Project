@@ -1,6 +1,7 @@
 <script>
     export let imageUrl = '';
     import { saveAs } from 'file-saver';
+    import download from '../images/Download-Icon.jpg'
 
     // Download Button
     const downloadImage = async (imageUrl) => {
@@ -21,7 +22,7 @@
 
 
 <button class="download-button" on:click={() => downloadImage(imageUrl)}>
-    <img src="./src/images/Download-Icon.jpg" alt="download">
+    <img src={download} alt="download">
 </button>
 
 

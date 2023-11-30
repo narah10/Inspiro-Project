@@ -2,11 +2,12 @@
   import { logout } from "./auth.mjs";
   import { userStore } from "./stores.mjs";
   import Search from "./Search.svelte";
+  import logo from "../images/logo.svg"
 </script>
 
 <nav>
   <div>
-    <img src="src/assets/logo.svg" alt="logo"/>
+    <img src={logo} alt="logo"/>
   </div>
   <Search />
   <ul>
