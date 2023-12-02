@@ -32,8 +32,8 @@
   <Navbar />
   {#if $route === '#login'}
   <Login />
-  {:else if  $route === '#boardDetails'}
-  <BoardDetails/> 
+  <!-- {:else if  $route === '#boardDetails'}
+  <BoardDetails/>  -->
   {:else}
   <Board />
   {/if}
