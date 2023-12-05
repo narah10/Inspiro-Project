@@ -1,6 +1,9 @@
-<script>
-  export let image;
-  import DownloadDetails from "./downloadDetails.svelte";
+
+
+<script> 
+  export let image; 
+  import  DownloadDetails  from "./DownloadDetails.svelte";
+
 
   let name = "";
   let comment = "";
