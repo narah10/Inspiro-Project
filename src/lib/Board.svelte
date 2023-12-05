@@ -68,7 +68,7 @@
         {:else }
         <h2>Welcome to Inspiro</h2>
         <p>Browse different art pieces of many talented artist</p>
-      
+        <Search {onSearch}/>
         {/if} 
   </div>
   <div class="board-container">
