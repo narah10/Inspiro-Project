@@ -1,14 +1,13 @@
 <script>
-  import BoardDetails from "./BoardDetails.svelte";
-  import DownloadDetails from "./DownloadDetails.svelte";
-  import Search from "./Search.svelte";
-  import { route } from "../lib/stores.mjs";
+    import BoardDetails from "./BoardDetails.svelte";
+    import { currentImage } from "../lib/stores.mjs"; 
+    import  DownloadDetails  from "./downloadDetails.svelte";
+    import Search from "./Search.svelte";
 
-  let currentImage = {};
-  let simplifiedData = [];
-  export let imageUrls = [];
-  export let imageAlts = [];
-  export let imageArtists = [];
+    let simplifiedData =[];
+    export let imageUrls = [];
+    export let imageAlts = [];
+    export let imageArtists = [];
 
   export async function boardData(query = "") {
         const url = "https://api.unsplash.com/";
@@ -26,7 +25,7 @@
                 Authorization: `Client-ID ${access_key}`,
               },
             });
-            console.log(`${url}${endpoint}?query=${query}&count=${count}`);
+    
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -52,7 +51,7 @@
             console.error("Error fetching data:", error);
         }
     }
-  
+
   //searches for images
   export function onSearch(query) {
     //loads images based on search query
