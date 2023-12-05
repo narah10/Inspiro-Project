@@ -1,6 +1,6 @@
 <script> 
   export let image; 
-  import  DownloadDetails  from "./downloadDetails.svelte";
+  import  DownloadDetails  from "./DownloadDetails.svelte";
 
   
   </script>
