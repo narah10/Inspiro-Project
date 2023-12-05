@@ -1,95 +1,87 @@
 <script>
-    // import { showImageDetails } from './util';
-    export let imageUrls = [];
-    export let imageAlts = [];
-    export let imageArtists = [];
-    export { showImageDetails };
-    import  DownloadDetails  from "./downloadDetails.svelte";
-    import FavoriteFunction from "./favoriteFunction.svelte";
-    
+  import BoardDetails from "./BoardDetails.svelte";
+  import { currentImage } from "../lib/stores.mjs"; 
+  import  DownloadDetails  from "./downloadDetails.svelte";
+  import FavoriteFunction from "./favoriteFunction.svelte";
 
-    export async function boardData() {
-      const url = "https://api.unsplash.com/";
-      const endpoint = "photos/random";
-      const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
-      try {
-        const response = await fetch(`${url}${endpoint}?count=30`, {
 
-          method: 'GET',
-          headers: {
-            'Content-type': 'application/json',
-            'Authorization': `Client-ID ${access_key}`,
-          },
-        });
-  
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-  
-        const data = await response.json();
-        imageUrls = data.map(item => item.urls.small);
-        imageAlts = data.map(item => item.alt_description);
-        imageArtists = data.map(item => item.user.name);
-        
-        console.log(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+  let simplifiedData =[];
+  export let imageUrls = [];
+  export let imageAlts = [];
+  export let imageArtists = [];
+
+  export async function boardData() {
+    const url = "https://api.unsplash.com/";
+    const endpoint = "photos/random";
+    const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
+    try {
+      const response = await fetch(`${url}${endpoint}?count=30`, {
+
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `Client-ID ${access_key}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      simplifiedData = data.map(item => ({url: item.urls.small, description: item.alt_description, artist: item.user.name, id: item.id}))
+      imageUrls = data.map(item => item.urls.small);
+      imageAlts = data.map(item => item.alt_description);
+      imageArtists = data.map(item => item.user.name);
+      
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
-    boardData();
+  }
+  boardData();
 
-    function showImageDetails(index) {
-    setTimeout(() => {
-      const boardDetails = document.getElementById("boardDetails");
-      if (boardDetails) {
-        boardDetails.innerHTML = `
-          <h2>Image Details</h2>
-          <img src="${imageUrls[index]}" alt="${imageAlts[index] || 'Unsplash'}" />
-          <h3>Artist: ${imageArtists[index]}</h3>
-        `;
-      } else {
-        console.error('Element with id "boardDetails" not found');
-      }
-    });
-  } 
-
-</script>
   
+</script>
+
 <div>
-  <h2>Welcome to Inspiro</h2>
-  <p>Browse different art pieces of many talented artists</p>
-  <div class="board-container">
-    {#each imageUrls as imageUrl, i (imageUrl)}
-      <div class="board-item">
-        <!-- Fetching Images -->
-        <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-        <!-- <h3>Artist: {imageArtists[i]}</h3> -->
-        <DownloadDetails imageUrl = {imageUrl}/>
-        <FavoriteFunction imageUrl = {imageUrl}/>
-        
-      </div>
-    {/each}
-  </div>
+<div> 
+  {#if $currentImage }
+      <BoardDetails image={$currentImage}/>
+      {:else }
+      <h2>Welcome to Inspiro</h2>
+      <p>Browse different art pieces of many talented artist</p>
+    
+      {/if} 
+</div>
+<div class="board-container">
+    {#each simplifiedData as image}
+    <div class="board-item">
+       <a href="#" on:click={() => $currentImage = image}><img src={image.url} alt={image.description || "Unsplash"} />
+        <h3>Artist: {image.artist}</h3></a> 
+        <DownloadDetails imageUrl = {image.url}/>
+        <FavoriteFunction imageUrl = {image.url}/>
+    </div>
+{/each}
+</div>
 </div>
 
 <style>
-  .board-item {
-    position: relative; 
-  }
-  
-  .board-container {
-  column-count: 3;
-  column-gap: 15px;
-  }
-  .board-item {
-  display: inline-block;
-  width: 100%;
-  }
-  .board-item img {
-  display:block;
-  width: 100%;
-  border-radius: 20px;
-  }
-</style>
+.board-item {
+  position: relative; 
+}
 
+.board-container {
+column-count: 3;
+column-gap: 15px;
+}
+.board-item {
+display: inline-block;
+width: 100%;
+}
+.board-item img {
+display:block;
+width: 100%;
+}
+</style>
   
