@@ -9,7 +9,6 @@
   <div>
     <img src={logo} alt="logo"/>
   </div>
-  <Search />
   <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#favorites">Favorites</a></li>
