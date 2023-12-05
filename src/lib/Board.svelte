@@ -1,5 +1,10 @@
 <script>
-    // import { showImageDetails } from './util';
+    import BoardDetails from "./BoardDetails.svelte";
+    import { currentImage } from "../lib/stores.mjs"; 
+    import  DownloadDetails  from "./downloadDetails.svelte";
+    import Search from "./Search.svelte";
+
+    let simplifiedData =[];
     export let imageUrls = [];
     export let imageAlts = [];
     export let imageArtists = [];
@@ -8,67 +13,80 @@
     import FavoriteFunction from "./favoriteFunction.svelte";
     
 
-    export async function boardData() {
-      const url = "https://api.unsplash.com/";
-      const endpoint = "photos/random";
-      const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
-      try {
-        const response = await fetch(`${url}${endpoint}?count=30`, {
+  export async function boardData(query = "") {
+        const url = "https://api.unsplash.com/";
+        //sets endpoint to search if query is present, otherwise random
+        const endpoint = query ? "search/photos" : "photos/random";
+        const access_key = "IftTCZlrrtO-pbVD1lRZWSppEas03FUG7ahRjmFwXag";
+        //sets count to 30 if query is present, otherwise 30
+        const count = query ? 30 : 30;
 
-          method: 'GET',
-          headers: {
-            'Content-type': 'application/json',
-            'Authorization': `Client-ID ${access_key}`,
-          },
-        });
-  
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+        try {
+            const response = await fetch(`${url}${endpoint}?page=1&per_page=30&query=${query}&count=${count}`, {
+              method: "GET",
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Client-ID ${access_key}`,
+              },
+            });
+    
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Check if data is an array (for random images) or an object (for search results)
+            const imagesArray = Array.isArray(data) ? data : data.results;
+
+            simplifiedData = imagesArray.map((item) => ({
+                url: item.urls.small,
+                description: item.alt_description,
+                artist: item.user.name,
+                id: item.id,
+            }));
+            imageUrls = imagesArray.map((item) => item.urls.small);
+            imageAlts = imagesArray.map((item) => item.alt_description);
+            imageArtists = imagesArray.map((item) => item.user.name);
+
+            console.log(data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
         }
-  
-        const data = await response.json();
-        imageUrls = data.map(item => item.urls.small);
-        imageAlts = data.map(item => item.alt_description);
-        imageArtists = data.map(item => item.user.name);
-        
-        console.log(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
     }
-    boardData();
 
-    function showImageDetails(index) {
-    setTimeout(() => {
-      const boardDetails = document.getElementById("boardDetails");
-      if (boardDetails) {
-        boardDetails.innerHTML = `
-          <h2>Image Details</h2>
-          <img src="${imageUrls[index]}" alt="${imageAlts[index] || 'Unsplash'}" />
-          <h3>Artist: ${imageArtists[index]}</h3>
-        `;
-      } else {
-        console.error('Element with id "boardDetails" not found');
-      }
-    });
-  } 
-
+  //searches for images
+  export function onSearch(query) {
+    //loads images based on search query
+      boardData(query);
+  }
+  //loads initial images
+  boardData();
 </script>
-  
+
 <div>
-  <h2>Welcome to Inspiro</h2>
-  <p>Browse different art pieces of many talented artists</p>
+  <div>
+    {#if $currentImage }
+        <BoardDetails image={$currentImage}/>
+      {:else}
+          <h2>Welcome to Inspiro</h2>
+          <p>Browse different art pieces of many talented artists</p>
+          <Search onSearch={onSearch} />
+      {/if}
+  </div>
   <div class="board-container">
-    {#each imageUrls as imageUrl, i (imageUrl)}
-      <div class="board-item">
-        <!-- Fetching Images -->
-        <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-        <!-- <h3>Artist: {imageArtists[i]}</h3> -->
-        <DownloadDetails imageUrl = {imageUrl}/>
-        <FavoriteFunction imageUrl = {imageUrl}/>
+      {#each simplifiedData as image}
+          <div class="board-item">
+              <a href="#" on:click={() => $currentImage = image}>
+                  <img src={image.url} alt={image.description || "Unsplash"} />
+                  <!-- <h3>Artist: {image.artist}</h3> -->
+              </a>
+              <DownloadDetails imageUrl={image.url} />
+            <FavoriteFunction imageUrl = {imageUrl}/>
         
       </div>
-    {/each}
+      {/each}
   </div>
 </div>
 

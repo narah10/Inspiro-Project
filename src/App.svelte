@@ -1,6 +1,7 @@
 <script>
   import Board from "./lib/Board.svelte";
   import BoardDetails from "./lib/BoardDetails.svelte";
+  import Favorite from "./lib/Favorite.svelte";
   import Login from "./lib/Login.svelte";
   import Navbar from "./lib/Navbar.svelte";
   import { route } from "./lib/stores.mjs"; 
@@ -25,15 +26,16 @@
 	<title>Inspiro</title>
 	<meta name="robots" content="noindex nofollow" />
 	<html lang="en" />
-  <link rel="icon" type="image/x-icon" href="/favicon">
 </svelte:head>
 
 <main>
   <Navbar />
   {#if $route === '#login'}
   <Login />
-  {:else if  $route === '#boardDetails'}
-  <BoardDetails/> 
+  {:else if $route === '#favorites'}
+  <Favorite />
+  <!-- {:else if  $route === '#boardDetails'}
+  <BoardDetails/>  -->
   {:else}
   <Board />
   {/if}
