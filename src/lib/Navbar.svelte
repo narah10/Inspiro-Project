@@ -17,7 +17,7 @@
     <li><a href="#favorites">Favorites</a></li>
     <li><a href="#home" on:click={logout}>Logout</a></li>
     {:else}
-    <li><a href="#home">Home</a></li>
+    <li><a href="#home" on:click={() => $currentImage = null}>Home</a></li>
     <li><a href="#login">Login</a></li>
   {/if}
   </ul>
