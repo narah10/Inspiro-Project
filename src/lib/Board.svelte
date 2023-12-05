@@ -5,6 +5,8 @@
     export let imageArtists = [];
     export { showImageDetails };
     import  DownloadDetails  from "./downloadDetails.svelte";
+    import FavoriteFunction from "./favoriteFunction.svelte";
+    
 
     export async function boardData() {
       const url = "https://api.unsplash.com/";
@@ -61,8 +63,10 @@
       <div class="board-item">
         <!-- Fetching Images -->
         <img src={imageUrl} alt={imageAlts[i] || "Unsplash"} />
-        <h3>Artist: {imageArtists[i]}</h3>
+        <!-- <h3>Artist: {imageArtists[i]}</h3> -->
         <DownloadDetails imageUrl = {imageUrl}/>
+        <FavoriteFunction imageUrl = {imageUrl}/>
+        
       </div>
     {/each}
   </div>
@@ -84,6 +88,7 @@
   .board-item img {
   display:block;
   width: 100%;
+  border-radius: 20px;
   }
 </style>
   

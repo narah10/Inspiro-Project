@@ -41,13 +41,11 @@
 
     .download-button:hover {
       transition: transform 0.5s ease-in-out;
+      transform: scale(1.2);
     }
 
     .download-button img {
-      width: 4.5rem;
+      width: 4.1rem;
     }
 
-    .download-button:hover img {
-      transform: scale(1.2);
-    }
 </style>
