@@ -25,7 +25,6 @@
 	<title>Inspiro</title>
 	<meta name="robots" content="noindex nofollow" />
 	<html lang="en" />
-  <link rel="icon" type="image/x-icon" href="/favicon">
 </svelte:head>
 
 <main>

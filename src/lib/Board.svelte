@@ -1,11 +1,10 @@
 <script>
     import BoardDetails from "./BoardDetails.svelte";
-    import { route } from "../lib/stores.mjs"; 
+    import { currentImage } from "../lib/stores.mjs"; 
     import  DownloadDetails  from "./downloadDetails.svelte";
 
 
-    let currentImage = {};
-    let simplifiedData =[]; 
+    let simplifiedData =[];
     export let imageUrls = [];
     export let imageAlts = [];
     export let imageArtists = [];
@@ -41,23 +40,23 @@
     }
     boardData();
 
-  
+    
 </script>
   
 <div>
   <div> 
-    {#if currentImage.id }
-        <BoardDetails image={currentImage}/>
-        {:else}
+    {#if $currentImage }
+        <BoardDetails image={$currentImage}/>
+        {:else }
         <h2>Welcome to Inspiro</h2>
         <p>Browse different art pieces of many talented artist</p>
-       
-             {/if} 
+      
+        {/if} 
   </div>
   <div class="board-container">
       {#each simplifiedData as image}
       <div class="board-item">
-         <a href="#" on:click={() => currentImage = image}><img src={image.url} alt={image.description || "Unsplash"} />
+         <a href="#" on:click={() => $currentImage = image}><img src={image.url} alt={image.description || "Unsplash"} />
           <h3>Artist: {image.artist}</h3></a> 
           <DownloadDetails imageUrl = {image.url}/>
       </div>
