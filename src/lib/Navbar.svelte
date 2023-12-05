@@ -1,6 +1,6 @@
 <script>
   import { logout } from "./auth.mjs";
-  import { userStore } from "./stores.mjs";
+  import { currentImage, userStore } from "./stores.mjs";
   import Search from "./Search.svelte";
   import logo from "../images/logo.svg"
   // import { checkLogin } from "./auth.mjs";
@@ -8,11 +8,12 @@
 
 <nav>
   <div>
-    <img src={logo} alt="logo"/>
+    <a href="#home" on:click={() => $currentImage = null}><img src={logo} alt="logo"/></a>
   </div>
   <ul>
+
   {#if $userStore.isLoggedIn}
-    <li><a href="#home">Home</a></li>
+   <li><a href="#home" on:click={() => $currentImage = null}>Home</a></li>
     <li><a href="#favorites">Favorites</a></li>
     <li><a href="#home" on:click={logout}>Logout</a></li>
     {:else}
