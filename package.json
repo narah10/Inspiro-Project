@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.38.5",
-    "file-saver": "^2.0.5"
+    "canvas-confetti": "^1.9.2",
+    "file-saver": "^2.0.5",
+    "sweetalert2": "^11.10.1"
   }
 }
