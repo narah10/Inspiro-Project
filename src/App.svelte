@@ -1,6 +1,7 @@
 <script>
   import Board from "./lib/Board.svelte";
   import BoardDetails from "./lib/BoardDetails.svelte";
+  import Favorite from "./lib/Favorite.svelte";
   import Login from "./lib/Login.svelte";
   import Navbar from "./lib/Navbar.svelte";
   import { route } from "./lib/stores.mjs"; 
@@ -31,6 +32,8 @@
   <Navbar />
   {#if $route === '#login'}
   <Login />
+  {:else if $route === '#favorites'}
+  <Favorite />
   <!-- {:else if  $route === '#boardDetails'}
   <BoardDetails/>  -->
   {:else}

@@ -62,24 +62,26 @@
 </script>
 
 <div>
-  <div> 
-    {#if $currentImage }
-        <BoardDetails image={$currentImage}/>
-        {:else }
-        <h2>Welcome to Inspiro</h2>
-        <p>Browse different art pieces of many talented artist</p>
-        <Search {onSearch}/>
-        {/if} 
+  <div>
+      {#if currentImage.id}
+          <BoardDetails imageDetail={currentImage} />
+      {:else}
+          <h2>Welcome to Inspiro</h2>
+          <p>Browse different art pieces of many talented artists</p>
+          <Search onSearch={onSearch} />
+      {/if}
   </div>
   <div class="board-container">
       {#each simplifiedData as image}
-      <div class="board-item">
-         <a href="#" on:click={() => $currentImage = image}><img src={image.url} alt={image.description || "Unsplash"} />
-          <h3>Artist: {image.artist}</h3></a> 
-          <DownloadDetails imageUrl = {image.url}/>
-      </div>
-  {/each}
-</div>
+          <div class="board-item">
+              <a href="" on:click={() => currentImage = image}>
+                  <img src={image.url} alt={image.description || "Unsplash"} />
+                  <h3>Artist: {image.artist}</h3>
+              </a>
+              <DownloadDetails imageUrl={image.url} />
+          </div>
+      {/each}
+  </div>
 </div>
 
 <style>
