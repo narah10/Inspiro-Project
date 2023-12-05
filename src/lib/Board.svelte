@@ -2,6 +2,7 @@
   import BoardDetails from "./BoardDetails.svelte";
   import { currentImage } from "../lib/stores.mjs"; 
   import  DownloadDetails  from "./downloadDetails.svelte";
+  import Search from "./Search.svelte";
   import FavoriteFunction from "./favoriteFunction.svelte";
 
 
@@ -39,6 +40,13 @@
       console.error('Error fetching data:', error);
     }
   }
+
+    //searches for images
+    export function onSearch(query) {
+    //loads images based on search query
+      boardData(query);
+  }
+  //loads initial images
   boardData();
 
   
@@ -51,7 +59,7 @@
       {:else }
       <h2>Welcome to Inspiro</h2>
       <p>Browse different art pieces of many talented artist</p>
-    
+      <Search {onSearch} />    
       {/if} 
 </div>
 <div class="board-container">
