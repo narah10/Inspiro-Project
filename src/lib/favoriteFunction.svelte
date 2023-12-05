@@ -21,6 +21,7 @@
     favorites = favorites.filter(url => url !== imageUrl)
     message = 'Image removed from favorite board.';
   }
+  
   console.log(imageUrl);
 
   // Save favorites to local storage
