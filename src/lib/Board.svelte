@@ -1,17 +1,16 @@
 <script>
+    export { showImageDetails };
     import BoardDetails from "./BoardDetails.svelte";
     import { currentImage } from "../lib/stores.mjs"; 
     import  DownloadDetails  from "./downloadDetails.svelte";
     import Search from "./Search.svelte";
+    import FavoriteFunction from "./favoriteFunction.svelte";
 
     let simplifiedData =[];
     export let imageUrls = [];
     export let imageAlts = [];
     export let imageArtists = [];
-    export { showImageDetails };
-    import  DownloadDetails  from "./downloadDetails.svelte";
-    import FavoriteFunction from "./favoriteFunction.svelte";
-    
+
 
   export async function boardData(query = "") {
         const url = "https://api.unsplash.com/";
@@ -76,17 +75,18 @@
       {/if}
   </div>
   <div class="board-container">
+
       {#each simplifiedData as image}
           <div class="board-item">
               <a href="#" on:click={() => $currentImage = image}>
                   <img src={image.url} alt={image.description || "Unsplash"} />
-                  <!-- <h3>Artist: {image.artist}</h3> -->
+                  <h3>Artist: {image.artist}</h3>
               </a>
               <DownloadDetails imageUrl={image.url} />
-            <FavoriteFunction imageUrl = {imageUrl}/>
-        
-      </div>
+              <FavoriteFunction imageUrl = {image.url}/>
+          </div>
       {/each}
+
   </div>
 </div>
 
