@@ -4,22 +4,23 @@
   import Favorite from "./lib/Favorite.svelte";
   import Login from "./lib/Login.svelte";
   import Navbar from "./lib/Navbar.svelte";
-  import { route } from "./lib/stores.mjs"; 
+  import { route, userStore } from "./lib/stores.mjs"; 
+  import { checkLogin } from "./lib/auth.mjs";
+  import {onMount} from 'svelte';
 
 
   window.addEventListener('popstate', () => {
-    // if (window.location.hash === '#profile' && !$userStore.isLoggedIn){
-      // window.location.hash = '#login';
-    // } else {
-      $route = window.location.hash
-    // }
+    if (window.location.hash === '#favorites' && !$userStore.isLoggedIn){
+      window.location.hash = '#login';
+    }
+    $route = window.location.hash
+    console.log(window.location.hash)
+    
   })
-
-  // async function init() {
-  //   checkLogIn();
-  // }
-
-  // onMount(init);
+  async function init() {
+    checkLogin();
+  }
+  onMount(init);
 </script>
 
 <svelte:head>
