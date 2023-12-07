@@ -5,6 +5,7 @@
 
   let name = "";
   let comment = "";
+  let savedComments=[];
 
   function saveComment() {
     if (name.trim() !== "" && comment.trim() !== "") {
@@ -23,16 +24,9 @@
   }
 
   function ShowComment() {
-    var commentSection = document.getElementById("commentsSection");
-    if (commentSection) {
-      commentSection.innerHTML = "";
-      var savedComments = getSavedComments(image.id);
-      savedComments.forEach(function (commentObj) {
-        var commentElement = document.createElement("p");
-        commentElement.textContent = `${commentObj.name}: ${commentObj.comment}`;
-        commentSection.appendChild(commentElement);
-      });
-    }
+
+      savedComments = getSavedComments(image.id);
+
   }
 
   ShowComment();
@@ -55,17 +49,21 @@
     <button on:click={saveComment}>Save Comment</button>
    
   </div>
-   <div id="commentsSection"></div>
+   <div id="commentsSection">
+    {#each savedComments as comment}
+    {comment.name} - {comment.comment}
+    {/each}
+   </div>
+
 </div>
   <hr>
   <div id="moreImages"></div>
 
   <style>
     #boardDetails {
-      /* background-color: #f4f4f4; */
+ 
       padding: 20px;
-      /* border-radius: 8px; */
-      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+
       margin-bottom: 20px;
     }
   

@@ -54,6 +54,7 @@
 
 <div>
 <div> 
+  {#key $currentImage}
   {#if $currentImage }
       <BoardDetails image={$currentImage}/>
       {:else }
@@ -61,6 +62,7 @@
       <p>Browse different art pieces of many talented artist</p>
       <Search {onSearch} />    
       {/if} 
+      {/key}
 </div>
 <div class="board-container">
     {#each simplifiedData as image}
