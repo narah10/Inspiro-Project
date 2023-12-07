@@ -2,37 +2,31 @@
   export let imageUrl = '';
   import { createEventDispatcher } from 'svelte';
   import Modal from './Modal.svelte';
+  import { favorites } from "./stores.mjs"; 
 
   // Load favorites from local storage on component initialization
-  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-  let isFavorite = favorites.indexOf(imageUrl) >=0 ? true : false;
+  let isFavorite;
+  $: isFavorite = $favorites.indexOf(imageUrl) >=0 ? true : false;
   let message = '';
   const dispatch = createEventDispatcher();
 
   function toggleFavorite() {
   isFavorite = !isFavorite;
+    if (isFavorite) {
+      // Add the image to the favorites list
+      $favorites.push(imageUrl);
+      localStorage.setItem('favorites', JSON.stringify($favorites));
+      message = 'Image added to the favorite board.';
+    } else { 
+      // Remove the image from the favorites list
+      $favorites = $favorites.filter(url => url !== imageUrl);
+      localStorage.setItem('favorites', JSON.stringify($favorites));
+      message = 'Image removed from the favorite board.';
+    }
 
-  if (isFavorite) {
-    // Add the image to the favorites list
-    favorites.push(imageUrl);
-    message = 'Image added to favorite board.';
-  } else {
-    // Remove the image from the favorites list
-    favorites = favorites.filter(url => url !== imageUrl)
-    message = 'Image removed from favorite board.';
-  }
+    console.log(imageUrl);
   
-  console.log(imageUrl);
-
-  // Save favorites to local storage
-  localStorage.setItem('favorites', JSON.stringify(favorites));
-
-  // Remove the image from local storage if it's removed from favorites
-  if (!isFavorite) {
-    localStorage.removeItem(imageUrl);
-  }
-
-  dispatch('showModal', { message });
+    dispatch('showModal', { message });
 }
 
   export { message };
@@ -81,3 +75,5 @@
     <button class:active={isFavorite} on:click={toggleFavorite} class="favorite-button"></button>
     <Modal {message} />
   </div>
+
+
