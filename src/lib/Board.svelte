@@ -91,6 +91,7 @@
 .board-container {
 column-count: 3;
 column-gap: 15px;
+max-width: 100%;
 }
 
 .board-item {
@@ -100,7 +101,14 @@ width: 100%;
 
 .board-item img {
 display:block;
-width: 100%;
+width: 90%;
+}
+
+@media screen and (max-width: 600px) {
+
+.board-container{
+  column-count: 2;
+}
 }
 </style>
   

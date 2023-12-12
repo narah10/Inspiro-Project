@@ -35,11 +35,16 @@
 
 
 <div id="boardDetails">
-  <h2>Image Details</h2>
+  <h2>Image Details</h2><div class="image_box">
+    <DownloadDetails imageUrl = {image.url}/>
+  <FavoriteFunction imageUrl = {image.url}/>
+</div>
+
+
   <img src="{image.url}" alt="{image.description || 'Unsplash'}" />
   <h3>Artist: {image.artist}</h3>
-  <DownloadDetails imageUrl = {image.url}/>
-  <FavoriteFunction imageUrl = {image.url}/>
+  <!-- <DownloadDetails imageUrl = {image.url}/>
+  <FavoriteFunction imageUrl = {image.url}/> -->
 
   
   
@@ -61,18 +66,36 @@
 
   <style>
     #boardDetails {
- 
       padding: 20px;
 
       margin-bottom: 20px;
     }
+  .image_box{
+    /* display:flex; 
+    justify-content: center;
+    border: solid #625FB4;
+    width:100%; */
+    position: relative;
+    right:25rem;
+  }
+  @media screen and (max-width: 600px) {
+
+    .image_box {
+      right:5rem;
+        }
+    /* #boardDetails{
+      background-color:blue; 
+    } */
   
+  }
+
+
     h2, h3 {
       color: #625FB4;
     }
   
     img {
-      max-width: 100%;
+      max-width: 80%;
       height: auto;
       margin-bottom: 15px;
       border-radius: 8px;
@@ -116,13 +139,7 @@
       padding: 5px 0;
       border-bottom: 1px solid #ccc;
     }
-      #moreImages{
-      column-count: 2;
-      column-gap: 15px;
-      display: inline-block;
-      width: 100%;
-    }
-    
+       
     hr{
       border: solid #625FB4;
       border-radius: 5px;
